@@ -13,10 +13,12 @@ class Game extends React.Component {
     const { game, viewStore } = this.props
     const { name, boxArtUrl } = game
 
+    const style = { width: '200px', cursor: 'pointer' }
+
     const picUrl = boxArtUrl.replace('{width}', 200).replace('{height}', 200)
 
     return (
-      <Card border={viewStore.isChecked(game) ? 'primary' : ''} style={{ width: '200px' }} as='label' className='mb-3 mr-auto ml-auto'>
+      <Card border={viewStore.isChecked(game) ? 'primary' : ''} style={style} as='label' className='mb-3 mr-auto ml-auto'>
         <Card.Img src={picUrl} alt={name} variant='top' />
         <Card.Body>
           <Card.Title className='text-truncate'>
