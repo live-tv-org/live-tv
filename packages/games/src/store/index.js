@@ -4,7 +4,7 @@ import UsersStore from './Users'
 import ViewStore from './View'
 
 const stores = {
-  viewStore: new ViewStore(),
+  viewStore: new ViewStore('viewStore'),
   gamesStore: new GamesStore(),
   streamsStore: new StreamsStore(),
   usersStore: new UsersStore()

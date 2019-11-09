@@ -23,12 +23,10 @@ class Stream extends Component {
 
     const picUrl = thumbnailUrl.replace('{width}', 210).replace('{height}', 125)
 
-    const style = { width: '210px', cursor: 'pointer' }
-
     const lang = langs.where('1', language).local
 
     return (
-      <Card onClick={this.onShow} as='li' style={style} className='mb-3'>
+      <Card onClick={this.onShow} as='li' style={{ cursor: 'pointer' }}>
         <Card.Img src={picUrl} alt={title} variant='top' />
         <Card.Body>
           <Card.Title style={{ whiteSpace: 'nowrap', textOverflow: 'ellipsis', overflow: 'hidden' }}>{title}</Card.Title>

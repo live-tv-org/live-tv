@@ -1,7 +1,15 @@
-import { observable, computed, action } from 'mobx'
+import { observable, computed, action, autorun, toJS } from 'mobx'
 
 class View {
   @observable checkedGames = []
+  @observable languages = []
+  @observable users = []
+  @observable playGame = null
+
+  constructor (name) {
+    this.hydrate(name)
+    autorun(() => this.persist(name))
+  }
 
   @action checkGame (game) {
     this.checkedGames.push(game)
@@ -20,8 +28,6 @@ class View {
     return this.findIndex(game) > -1
   }
 
-  @observable playGame = null
-
   @computed get isGamePlaying () {
     return !!this.playGame
   }
@@ -32,6 +38,25 @@ class View {
 
   @action playGamePlaying (id) {
     this.playGame = id
+  }
+
+  persist (name) {
+    const data = {
+      checkedGames: toJS(this.checkedGames),
+      languages: toJS(this.languages),
+      users: toJS(this.users)
+    }
+
+    window.localStorage.setItem(name, JSON.stringify(data))
+  }
+
+  @action hydrate (name) {
+    try {
+      const viewStore = JSON.parse(window.localStorage.getItem(name))
+      this.checkedGames = viewStore.checkedGames || []
+      this.languages = viewStore.languages || []
+      this.users = viewStore.users || []
+    } catch (e) {}
   }
 }
 

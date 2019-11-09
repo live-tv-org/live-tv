@@ -7,11 +7,11 @@ import Loader from './Loader'
 import Stream from './Stream'
 
 const List = styled.ul`
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-gap: 1rem;
   list-style: none;
   padding: 0;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
 `
 
 @observer
