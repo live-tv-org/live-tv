@@ -30,10 +30,10 @@ class Filter extends Component {
     console.info('render Filter')
 
     return (
-      <Form onSubmit={this.onSubmit} className='mb-3'>
+      <Form onSubmit={this.onSubmit}>
         <Form.Row>
           <Col md='4'>
-            <AsyncSelect
+            <AsyncSelect className='mb-3'
               isMulti
               placeholder='Find games...'
               isDisabled={pendingRequests}
@@ -47,7 +47,7 @@ class Filter extends Component {
             />
           </Col>
           <Col md='3'>
-            <Select
+            <Select className='mb-3'
               isMulti
               placeholder='Select langs...'
               isDisabled={pendingRequests}
@@ -58,7 +58,7 @@ class Filter extends Component {
             />
           </Col>
           <Col md='3'>
-            <AsyncSelect
+            <AsyncSelect className='mb-3'
               isMulti
               placeholder='Find users...'
               isDisabled={pendingRequests}
@@ -70,7 +70,7 @@ class Filter extends Component {
             />
           </Col>
           <Col md='2'>
-            <Button block type='submit' variant='primary' disabled={pendingRequests}>Go!</Button>
+            <Button className='mb-3' block type='submit' variant='primary' disabled={pendingRequests}>Go!</Button>
           </Col>
         </Form.Row>
       </Form>
