@@ -1,3 +1,4 @@
+import uniqBy from 'lodash/uniqBy'
 import { flow, observable, computed } from 'mobx'
 import api from '../utils/api'
 import { urlParamsStringify } from '../utils'
@@ -23,14 +24,13 @@ class Streams {
         params.after = this.streamsPagination.cursor
       }
 
-      const { data, pagination } = yield api.fetch(`https://api.twitch.tv/helix/streams?${urlParamsStringify(params)}`)
+      let { data, pagination } = yield api.fetch(`https://api.twitch.tv/helix/streams?${urlParamsStringify(params)}`)
 
-      if (options.reset) {
-        this.streams = data
-      } else {
-        // TODO: check unic
-        this.streams.push(...data)
+      if (!options.reset) {
+        data = uniqBy([...this.streams, ...data], 'id')
       }
+
+      this.streams = data
 
       if (pagination.cursor) {
         this.streamsPagination = pagination
