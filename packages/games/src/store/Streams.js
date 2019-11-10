@@ -10,12 +10,32 @@ class Streams {
     this.loader = new Loader()
   }
 
-  fetch = flow(function* (params) {
+  fetch = flow(function* (params, options = {}) {
     const { loader } = this
 
     loader.create()
     try {
-      this.streams = yield api.fetch(`https://api.twitch.tv/helix/streams?${urlParamsStringify(params)}`)
+      if (options.reset) {
+        this.streamsPagination = null
+      }
+
+      if (this.streamsPagination) {
+        params.after = this.streamsPagination.cursor
+      }
+
+      const { data, pagination } = yield api.fetch(`https://api.twitch.tv/helix/streams?${urlParamsStringify(params)}`)
+
+      if (options.reset) {
+        this.streams = data
+      } else {
+        // TODO: check unic
+        this.streams.push(...data)
+      }
+
+      if (pagination.cursor) {
+        this.streamsPagination = pagination
+      }
+
       loader.completed()
     } catch (e) {
       loader.failed(e)

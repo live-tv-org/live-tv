@@ -15,7 +15,8 @@ class Users {
 
     loader.create()
     try {
-      this.users = yield api.fetch(`https://api.twitch.tv/helix/users?${urlParamsStringify(params)}`)
+      const { data } = yield api.fetch(`https://api.twitch.tv/helix/users?${urlParamsStringify(params)}`)
+      this.users = data
       loader.completed()
       return this.users
     } catch (e) {
