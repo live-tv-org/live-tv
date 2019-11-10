@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { observer } from 'mobx-react'
+import styled  from 'styled-components'
 import langs from 'langs'
 import Badge from 'react-bootstrap/Badge'
 import Card from 'react-bootstrap/Card'
@@ -32,9 +33,11 @@ class Stream extends Component {
           <Card.Title style={{ whiteSpace: 'nowrap', textOverflow: 'ellipsis', overflow: 'hidden' }}>{title}</Card.Title>
           <Card.Subtitle className="mb-2 text-muted">{userName} <Badge variant='light'>{lang}</Badge></Card.Subtitle>
         </Card.Body>
-        <Card.Footer className="text-muted">
-          <ProgressBar label={viewerCount} now={viewerCount} max={streamsStore.maxViewer.viewerCount} min='0' variant="info" />
-        </Card.Footer>
+        {!!viewerCount && (
+          <Card.Footer>
+            <ProgressBar label={<ProgressLabel>{viewerCount}</ProgressLabel>} now={viewerCount} max={streamsStore.maxViewer.viewerCount} min='0' variant='info' />
+          </Card.Footer>
+        )}
       </Card>
     )
   }
@@ -43,5 +46,9 @@ class Stream extends Component {
     this.props.viewStore.playGamePlaying(this.props.stream.userName)
   }
 }
+
+const ProgressLabel = styled.span`
+  text-shadow: 1px 1px 1px var(--info);
+`
 
 export default withStoreContext(StoreContext)(Stream)
