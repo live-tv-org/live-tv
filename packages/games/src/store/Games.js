@@ -17,7 +17,8 @@ class Games {
 
     loader.create()
     try {
-      this.games = yield api.fetch(`https://api.twitch.tv/helix/games?${urlParamsStringify(params)}`)
+      const { data } = yield api.fetch(`https://api.twitch.tv/helix/games?${urlParamsStringify(params)}`)
+      this.games = data
       loader.completed()
       return this.games
     } catch (e) {
@@ -30,7 +31,8 @@ class Games {
 
     loaderTop.create()
     try {
-      this.topGames = yield api.fetch('https://api.twitch.tv/helix/games/top')
+      const { data } = yield api.fetch('https://api.twitch.tv/helix/games/top')
+      this.topGames = data
       loaderTop.completed()
     } catch (e) {
       loaderTop.failed(e)

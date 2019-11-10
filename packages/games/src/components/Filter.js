@@ -67,7 +67,12 @@ class Filter extends Component {
             />
           </Col>
           <Col md='2'>
-            <Button className='mb-3' block type='submit' variant='primary' disabled={pendingRequests}>Go!</Button>
+            <Button className='mb-3' block type='submit' variant='primary' disabled={pendingRequests}>
+              {pendingRequests
+                ? 'Loading…'
+                : 'Go!'
+              }
+            </Button>
           </Col>
         </Form.Row>
       </Form>
@@ -101,22 +106,7 @@ class Filter extends Component {
 
   @action fetch = () => {
     const { streamsStore, viewStore } = this.props
-
-    const params = {}
-
-    if (viewStore.checkedGames.length) {
-      params.game_id = viewStore.checkedGames.map(({ id }) => id)
-    }
-
-    if (viewStore.languages.length) {
-      params.language = viewStore.languages.map((item) => item[1])
-    }
-
-    if (viewStore.users.length) {
-      params.user_id = viewStore.users.map(({ id }) => id)
-    }
-
-    streamsStore.fetch(params)
+    streamsStore.fetch(viewStore.serializeParams, { reset: true })
   }
 }
 

@@ -40,6 +40,24 @@ class View {
     this.playGame = id
   }
 
+  @computed get serializeParams () {
+    const params = {}
+
+    if (this.checkedGames.length) {
+      params.game_id = this.checkedGames.map(({ id }) => id)
+    }
+
+    if (this.languages.length) {
+      params.language = this.languages.map((item) => item[1])
+    }
+
+    if (this.users.length) {
+      params.user_id = this.users.map(({ id }) => id)
+    }
+
+    return params
+  }
+
   persist (name) {
     const data = {
       checkedGames: toJS(this.checkedGames),

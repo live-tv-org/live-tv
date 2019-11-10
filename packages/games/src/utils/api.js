@@ -25,13 +25,12 @@ const _fetch = (url, opt = {}) => {
         }
         return resp.json()
       })
-    .then(payload => (payload.data || payload))
-    .then(data => {
+    .then(({ data, pagination }) => {
       if (Array.isArray(data)) {
-        return data.map(camelCaseObj)
+        return { data: data.map(camelCaseObj), pagination }
       }
 
-      return camelCaseObj(data)
+      return { data: camelCaseObj(data) }
     })
 }
 
