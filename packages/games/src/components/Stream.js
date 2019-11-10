@@ -33,11 +33,12 @@ class Stream extends Component {
           <Card.Title style={{ whiteSpace: 'nowrap', textOverflow: 'ellipsis', overflow: 'hidden' }}>{title}</Card.Title>
           <Card.Subtitle className="mb-2 text-muted">{userName} <Badge variant='light'>{lang}</Badge></Card.Subtitle>
         </Card.Body>
-        {!!viewerCount && (
-          <Card.Footer>
-            <ProgressBar label={<ProgressLabel>{viewerCount}</ProgressLabel>} now={viewerCount} max={streamsStore.maxViewer.viewerCount} min='0' variant='info' />
-          </Card.Footer>
-        )}
+        <Card.Footer>
+          {streamsStore.percentToMax(viewerCount) > 0.025 && (
+            <Popularity now={viewerCount} max={streamsStore.maxViewer.viewerCount} min='0' variant='info' />
+          )}
+          <small className='text-muted'>Viewers: {viewerCount}</small>
+        </Card.Footer>
       </Card>
     )
   }
@@ -47,8 +48,8 @@ class Stream extends Component {
   }
 }
 
-const ProgressLabel = styled.span`
-  text-shadow: 1px 1px 1px var(--info);
+const Popularity = styled(ProgressBar)`
+  height: 4px;
 `
 
 export default withStoreContext(StoreContext)(Stream)

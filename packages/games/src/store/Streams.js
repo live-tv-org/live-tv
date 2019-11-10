@@ -45,6 +45,10 @@ class Streams {
   @computed get maxViewer () {
     return this.streams[0]
   }
+
+  percentToMax (viewer) {
+    return viewer / this.maxViewer.viewerCount
+  }
 }
 
 export default Streams
