@@ -4,7 +4,6 @@ import { configure } from 'mobx'
 import stores from './store'
 import { StoreContext } from './store/context'
 import App from './App'
-import 'bootstrap/dist/css/bootstrap.min.css'
 
 console.info('GAMES bootstrap')
 

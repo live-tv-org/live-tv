@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "https://gaer87.github.io/live-tv/packages/container/build/precache-manifest.1b430fc3519edc74b44300ec72ac9113.js"
+  "https://gaer87.github.io/live-tv/packages/container/build/precache-manifest.f10ee788c3c8321767c3dbef4d7a10fe.js"
 );
 
 self.addEventListener('message', (event) => {
