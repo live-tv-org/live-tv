@@ -19,6 +19,7 @@
   "scripts": {
     "start": "react-app-rewired start",
     "build": "react-app-rewired build",
+    "postbuild": "find ../../docs -type d -name \"packages\" -prune -o -type f  -print0 | xargs -0 -I {} rm -v {} && rm -r ../../docs/static && mv -f build/* ../../docs",
     "test": "react-app-rewired test",
     "eject": "react-app-rewired eject"
   },

@@ -75,6 +75,7 @@
   "scripts": {
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
+    "postbuild": "rm -rf ../../docs/packages/games/* && mv -f build/* ../../docs/packages/games",
     "test": "node scripts/test.js"
   },
   "eslintConfig": {
