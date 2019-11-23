@@ -1,12 +1,18 @@
 import { observable, computed, action, autorun, toJS } from 'mobx'
+import langs from 'langs'
 
 class View {
   @observable checkedGames = []
   @observable languages = []
   @observable users = []
-  @observable playGame = null
+  @observable playStream = null
+  languagesDict = langs.all()
 
-  constructor (name) {
+  constructor (name, gamesStore, streamsStore, usersStore) {
+    this.gamesStore = gamesStore
+    this.streamsStore = streamsStore
+    this.usersStore = usersStore
+
     this.hydrate(name)
     autorun(() => this.persist(name))
   }
@@ -16,31 +22,31 @@ class View {
   }
 
   @action uncheckGame (game) {
-    const i = this.findIndex(game)
+    const i = this.findCheckedGameIndex(game)
     i !== -1 && this.checkedGames.splice(i, 1)
   }
 
-  findIndex (game) {
+  findCheckedGameIndex (game) {
     return this.checkedGames.findIndex(item => item.id === game.id)
   }
 
-  isChecked (game) {
-    return this.findIndex(game) > -1
+  isCheckedGame (game) {
+    return this.findCheckedGameIndex(game) > -1
   }
 
-  @computed get isGamePlaying () {
-    return !!this.playGame
+  @computed get isStreamPlaying () {
+    return !!this.playStream
   }
 
-  @action stopGamePlaying () {
-    this.playGame = null
+  @action stopStreamPlaying = () => {
+    this.playStream = null
   }
 
-  @action playGamePlaying (id) {
-    this.playGame = id
+  @action playStreamPlaying ({ userName }) {
+    this.playStream = userName
   }
 
-  @computed get serializeParams () {
+  @computed get filterParams () {
     const params = {}
 
     if (this.checkedGames.length) {
@@ -57,6 +63,8 @@ class View {
 
     return params
   }
+
+  fetchStreams = (...args) => this.streamsStore.fetch(this.filterParams, ...args)
 
   persist (name) {
     const data = {

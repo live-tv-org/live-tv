@@ -17,12 +17,14 @@ class Game extends React.Component {
 
     const picUrl = boxArtUrl.replace('{width}', 200).replace('{height}', 200)
 
+    const isChecked = viewStore.isCheckedGame(game)
+
     return (
-      <Card border={viewStore.isChecked(game) ? 'primary' : ''} style={style} as='label' className='mb-3 mr-auto ml-auto'>
+      <Card border={isChecked ? 'primary' : ''} style={style} as='label' className='mb-3 mr-auto ml-auto'>
         <Card.Img src={picUrl} alt={name} variant='top' />
         <Card.Body>
           <Card.Title className='text-truncate'>
-            <input type='checkbox' onChange={this.onCheck} checked={viewStore.isChecked(game)} className='mr-1' />
+            <input type='checkbox' onChange={this.onCheck} checked={isChecked} className='mr-1' />
             {name}
           </Card.Title>
         </Card.Body>

@@ -10,10 +10,6 @@ import { withStoreContext } from '../utils/hoc'
 
 @observer
 class Stream extends Component {
-  constructor (props) {
-    super(props)
-  }
-
   render () {
     console.info('render Stream')
 
@@ -43,9 +39,7 @@ class Stream extends Component {
     )
   }
 
-  onShow = () => {
-    this.props.viewStore.playGamePlaying(this.props.stream.userName)
-  }
+  onShow = () => this.props.viewStore.playStreamPlaying(this.props.stream)
 }
 
 const Popularity = styled(ProgressBar)`

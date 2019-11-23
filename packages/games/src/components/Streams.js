@@ -17,30 +17,22 @@ class Streams extends Component {
     const { streamsStore } = this.props
     const { pendingRequests } = streamsStore.loader
 
+    if (!streamsStore.streams.length) {
+      return <i>The empty list.</i>
+    }
+
     return (
       <>
-        {streamsStore.streams.length
-          ? <List>{streamsStore.streams.map(stream => <Stream key={stream.id} stream={stream} />)}</List>
-          : <i>The empty list.</i>
-        }
-
+        <List>{streamsStore.streams.map(stream => <Stream key={stream.id} stream={stream} />)}</List>
         <Row className='justify-content-md-center'>
           <Col md='2'>
-            <Button onClick={this.fetch} variant='secondary' block disabled={pendingRequests}>
-              {pendingRequests
-                ? 'Loading…'
-                : 'More'
-              }
+            <Button onClick={this.props.viewStore.fetchStreams} variant='secondary' block disabled={pendingRequests}>
+              {pendingRequests ? 'Loading…' : 'More'}
             </Button>
           </Col>
         </Row>
       </>
     )
-  }
-
-  @action fetch = () => {
-    const { streamsStore, viewStore } = this.props
-    streamsStore.fetch(viewStore.serializeParams)
   }
 }
 

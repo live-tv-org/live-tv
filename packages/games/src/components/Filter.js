@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { action, toJS } from 'mobx'
 import { observer } from 'mobx-react'
 import Select from 'react-select'
-import langs from 'langs'
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
@@ -12,8 +11,6 @@ import { withStoreContext } from '../utils/hoc'
 
 @observer
 class Filter extends Component {
-  languagesDict = langs.all()
-
   componentDidMount() {
     this.fetch()
   }
@@ -47,7 +44,7 @@ class Filter extends Component {
               placeholder='Select langs...'
               isDisabled={pendingRequests}
               value={toJS(viewStore.languages)}
-              options={this.languagesDict}
+              options={viewStore.languagesDict}
               getOptionValue={(item) => item[1]}
               getOptionLabel={({ local }) => local}
               onChange={this.onChangeLang}
@@ -79,17 +76,11 @@ class Filter extends Component {
     )
   }
 
-  @action onChangeGame = selected => {
-    this.props.viewStore.checkedGames = selected || []
-  }
+  @action onChangeGame = selected => this.props.viewStore.checkedGames = selected || []
 
-  @action onChangeLang = selected => {
-    this.props.viewStore.languages = selected || []
-  }
+  @action onChangeLang = selected => this.props.viewStore.languages = selected || []
 
-  @action onChangeUser = selected => {
-    this.props.viewStore.users = selected || []
-  }
+  @action onChangeUser = selected => this.props.viewStore.users = selected || []
 
   @action findGame = inputValue => new Promise(resolve => {
     this.props.gamesStore.fetch({ name: inputValue }).then(resolve)
@@ -104,10 +95,7 @@ class Filter extends Component {
     this.fetch()
   }
 
-  @action fetch = () => {
-    const { streamsStore, viewStore } = this.props
-    streamsStore.fetch(viewStore.serializeParams, { reset: true })
-  }
+  fetch = () => this.props.viewStore.fetchStreams({ reset: true })
 }
 
 export default withStoreContext(StoreContext)(Filter)

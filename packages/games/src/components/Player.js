@@ -34,15 +34,15 @@ class Player extends Component {
       <>
         <ModalWidth />
         <Modal
-            show={viewStore.isGamePlaying}
-            onShow={() => this.togglePlayer()}
-            onHide={() => viewStore.stopGamePlaying()}
+            show={viewStore.isStreamPlaying}
+            onShow={this.togglePlayer}
+            onHide={viewStore.stopStreamPlaying}
             dialogClassName='modal-player'>
           <Modal.Body>
             <div ref={this.playerCont} />
           </Modal.Body>
           <Modal.Footer>
-            <Button variant="secondary" onClick={() => viewStore.stopGamePlaying()}>Close</Button>
+            <Button variant="secondary" onClick={viewStore.stopStreamPlaying}>Close</Button>
           </Modal.Footer>
         </Modal>
       </>
@@ -50,7 +50,7 @@ class Player extends Component {
   }
 
   togglePlayer = () => {
-    const options = { width: PLAYER_WIDTH, height: 300, channel: this.props.viewStore.playGame };
+    const options = { width: PLAYER_WIDTH, height: 300, channel: this.props.viewStore.playStream };
     const player = new window.Twitch.Player(this.playerCont.current, options);
     player.setVolume(0.5);
   }
