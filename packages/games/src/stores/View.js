@@ -57,6 +57,24 @@ class View {
     this.playStream = userName
   }
 
+  @action changeUsers = (users) => {
+    users = users || []
+    this.users = users.map(item => User.fromJS(this, item))
+  }
+
+  @computed get usersToJS () {
+    return this.users.map(item => item.toJS())
+  }
+
+  @action changeLang = (lang) => {
+    lang = lang || []
+    this.languages = lang
+  }
+
+  @computed get langToJS () {
+    return toJS(this.languages)
+  }
+
   @computed get filterParams () {
     const params = {}
 
@@ -76,24 +94,6 @@ class View {
   }
 
   fetchStreams = (...args) => this.streamsStore.fetch(this.filterParams, ...args)
-
-  @action changeUsers = (users) => {
-    users = users || []
-    this.users = users.map(item => User.fromJS(this, item))
-  }
-
-  @computed get usersToJS () {
-    return this.users.map(item => item.toJS())
-  }
-
-  @action changeLang = (lang) => {
-    lang = lang || []
-    this.languages = lang
-  }
-
-  @computed get langToJS () {
-    return toJS(this.languages)
-  }
 
   persist (name) {
     const data = {

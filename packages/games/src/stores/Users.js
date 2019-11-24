@@ -17,22 +17,13 @@ class Users {
     loader.create()
     try {
       const { data } = yield api.fetch(`https://api.twitch.tv/helix/users?${urlParamsStringify(params)}`)
-      const users = data.map(item => User.fromJS(this, item))
-
-      this.users.push(...users.filter(this.isUnic))
-
+      this.users = data.map(item => User.fromJS(this, item))
       loader.completed()
       return this.users
     } catch (e) {
       loader.failed(e)
     }
   })
-
-  @computed get ids() {
-    return this.users.map(item => item.id)
-  }
-
-  isUnic = item => !this.ids.includes(item.id)
 
   @computed get toJS () {
     return this.users.map(item => item.toJS())

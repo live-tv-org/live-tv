@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import { action, toJS } from 'mobx'
 import { observer } from 'mobx-react'
 import Select from 'react-select'
 import Col from 'react-bootstrap/Col';
@@ -76,13 +75,9 @@ class Filter extends Component {
     )
   }
 
-  @action findGame = inputValue => new Promise(resolve => {
-    this.props.gamesStore.fetch({ name: inputValue }).then(resolve)
-  })
+  findGame = inputValue => this.props.gamesStore.fetch({ name: inputValue })
 
-  @action findUser = inputValue => new Promise(resolve => {
-    this.props.usersStore.fetch({ login: inputValue }).then(resolve)
-  })
+  findUser = inputValue => this.props.usersStore.fetch({ login: inputValue })
 
   onSubmit = e => {
     e.preventDefault()
