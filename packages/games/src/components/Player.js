@@ -6,11 +6,12 @@ import { createGlobalStyle } from 'styled-components'
 import { StoreContext } from '../stores/context'
 import { withStoreContext } from '../utils/hoc'
 
-const PLAYER_WIDTH = 620
+const PLAYER_WIDTH = 720
+const RATIO = .564
 
 const ModalWidth = createGlobalStyle`
   .modal-player {
-    max-width: calc(${PLAYER_WIDTH}px + 2rem + 2px) !important;
+    max-width: calc(${PLAYER_WIDTH}px + 2px) !important;
     
     iframe {
       display: block;
@@ -38,7 +39,7 @@ class Player extends Component {
             onShow={this.togglePlayer}
             onHide={viewStore.stopStreamPlaying}
             dialogClassName='modal-player'>
-          <Modal.Body>
+          <Modal.Body className='m-n3'>
             <div ref={this.playerCont} />
           </Modal.Body>
           <Modal.Footer>
@@ -50,7 +51,7 @@ class Player extends Component {
   }
 
   togglePlayer = () => {
-    const options = { width: PLAYER_WIDTH, height: 300, channel: this.props.viewStore.playStream };
+    const options = { width: PLAYER_WIDTH, height: PLAYER_WIDTH * RATIO, channel: this.props.viewStore.playStream };
     const player = new window.Twitch.Player(this.playerCont.current, options);
     player.setVolume(0.5);
   }
