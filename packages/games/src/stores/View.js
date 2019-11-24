@@ -1,4 +1,5 @@
 import { observable, computed, action, autorun, toJS } from 'mobx'
+import differenceBy from 'lodash/differenceBy'
 import langs from 'langs'
 import Game from '../models/Game'
 import User from '../models/User'
@@ -8,7 +9,6 @@ class View {
   @observable languages = []
   @observable users = []
   @observable playStream = null
-  languagesDict = langs.all()
 
   constructor (name, gamesStore, streamsStore, usersStore) {
     this.gamesStore = gamesStore
@@ -94,6 +94,28 @@ class View {
   }
 
   fetchStreams = (...args) => this.streamsStore.fetch(this.filterParams, ...args)
+
+  get lang () {
+    const all = langs.all()
+
+    const top = [
+      langs.where('1', 'en'),
+      langs.where('1', 'ru'),
+      langs.where('1', 'de'),
+      langs.where('1', 'es'),
+      langs.where('1', 'fr'),
+      langs.where('1', 'ja'),
+      langs.where('1', 'pt'),
+      langs.where('1', 'it'),
+      langs.where('1', 'fa'),
+      langs.where('1', 'pl'),
+      langs.where('1', 'zh')
+    ]
+
+    const other = differenceBy(all, top, '1')
+
+    return top.concat(other)
+  }
 
   persist (name) {
     const data = {

@@ -11,7 +11,7 @@ import { withStoreContext } from '../utils/hoc'
 @observer
 class Filter extends Component {
   componentDidMount() {
-    this.fetch()
+    this.props.viewStore.fetchStreams({ reset: true })
   }
 
   render () {
@@ -43,7 +43,7 @@ class Filter extends Component {
               placeholder='Select langs...'
               isDisabled={pendingRequests}
               value={viewStore.langToJS}
-              options={viewStore.languagesDict}
+              options={viewStore.lang}
               getOptionValue={(item) => item[1]}
               getOptionLabel={({ local }) => local}
               onChange={viewStore.changeLang}
@@ -81,10 +81,8 @@ class Filter extends Component {
 
   onSubmit = e => {
     e.preventDefault()
-    this.fetch()
+    this.props.viewStore.fetchStreams({ reset: true })
   }
-
-  fetch = () => this.props.viewStore.fetchStreams({ reset: true })
 }
 
 export default withStoreContext(StoreContext)(Filter)
