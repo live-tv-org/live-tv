@@ -1,8 +1,8 @@
-import uniqBy from 'lodash/uniqBy'
 import { flow, observable, computed } from 'mobx'
 import api from '../utils/api'
 import { urlParamsStringify } from '../utils'
 import Loader from './Loader'
+import Stream from '../models/Stream'
 
 class Streams {
   @observable streams = []
@@ -26,11 +26,13 @@ class Streams {
 
       let { data, pagination } = yield api.fetch(`https://api.twitch.tv/helix/streams?${urlParamsStringify(params)}`)
 
-      if (!options.reset) {
-        data = uniqBy([...this.streams, ...data], 'id')
-      }
+      data = data.map(item => Stream.fromJS(this, item))
 
-      this.streams = data
+      if (options.reset) {
+        this.streams = data
+      } else {
+        this.streams.push(...data.filter(this.isUnic))
+      }
 
       if (pagination.cursor) {
         this.streamsPagination = pagination
@@ -42,12 +44,14 @@ class Streams {
     }
   })
 
-  @computed get maxViewer () {
-    return this.streams[0]
+  @computed get ids() {
+    return this.streams.map(item => item.id)
   }
 
-  percentToMax (viewer) {
-    return viewer / this.maxViewer.viewerCount
+  isUnic = item => !this.ids.includes(item.id)
+
+  @computed get maxViewer () {
+    return this.streams[0]
   }
 }
 

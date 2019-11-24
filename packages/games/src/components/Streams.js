@@ -23,7 +23,11 @@ class Streams extends Component {
 
     return (
       <>
-        <List>{streamsStore.streams.map(stream => <Stream key={stream.id} stream={stream} />)}</List>
+        <List>
+          {streamsStore.streams.map(stream =>
+            <Stream key={stream.id} stream={stream} />
+          )}
+        </List>
         <Row className='justify-content-md-center'>
           <Col md='2'>
             <Button onClick={this.props.viewStore.fetchStreams} variant='secondary' block disabled={pendingRequests}>

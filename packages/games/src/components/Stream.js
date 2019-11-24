@@ -14,25 +14,20 @@ class Stream extends Component {
     console.info('render Stream')
 
     const {
-      streamsStore,
-      stream: { title, thumbnailUrl, viewerCount, userName, language }
+      stream: { title, thumbnailUrlDim, viewerCount, userName, language, isPopular, maxViewerCount }
     } = this.props
-
-    const picUrl = thumbnailUrl.replace('{width}', 210).replace('{height}', 125)
 
     const lang = langs.where('1', language).local
 
     return (
       <Card onClick={this.onShow} as='li' style={{ cursor: 'pointer' }}>
-        <Card.Img src={picUrl} alt={title} variant='top' />
+        <Card.Img src={thumbnailUrlDim} alt={title} variant='top' />
         <Card.Body>
           <Card.Title style={{ whiteSpace: 'nowrap', textOverflow: 'ellipsis', overflow: 'hidden' }}>{title}</Card.Title>
           <Card.Subtitle className="mb-2 text-muted">{userName} <Badge variant='light'>{lang}</Badge></Card.Subtitle>
         </Card.Body>
         <Card.Footer>
-          {streamsStore.percentToMax(viewerCount) > 0.025 && (
-            <Popularity now={viewerCount} max={streamsStore.maxViewer.viewerCount} min='0' variant='info' />
-          )}
+          {isPopular && <Popularity now={viewerCount} max={maxViewerCount} min='0' variant='info' />}
           <small className='text-muted'>Viewers: {viewerCount}</small>
         </Card.Footer>
       </Card>

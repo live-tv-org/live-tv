@@ -2,6 +2,7 @@ import { observable, flow } from 'mobx'
 import { urlParamsStringify } from '../utils'
 import api from '../utils/api'
 import Loader from './Loader'
+import Game from '../models/Game'
 
 class Games {
   @observable games = []
@@ -18,7 +19,7 @@ class Games {
     loader.create()
     try {
       const { data } = yield api.fetch(`https://api.twitch.tv/helix/games?${urlParamsStringify(params)}`)
-      this.games = data
+      this.games = data.map(item => Game.fromJS(this, item))
       loader.completed()
       return this.games
     } catch (e) {
@@ -32,7 +33,7 @@ class Games {
     loaderTop.create()
     try {
       const { data } = yield api.fetch('https://api.twitch.tv/helix/games/top')
-      this.topGames = data
+      this.topGames = data.map(item => Game.fromJS(this, item))
       loaderTop.completed()
     } catch (e) {
       loaderTop.failed(e)

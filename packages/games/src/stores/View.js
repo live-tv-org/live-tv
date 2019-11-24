@@ -1,5 +1,7 @@
 import { observable, computed, action, autorun, toJS } from 'mobx'
 import langs from 'langs'
+import Game from '../models/Game'
+import User from '../models/User'
 
 class View {
   @observable checkedGames = []
@@ -68,9 +70,9 @@ class View {
 
   persist (name) {
     const data = {
-      checkedGames: toJS(this.checkedGames),
+      checkedGames: this.checkedGames.map(item => item.toJS()),
       languages: toJS(this.languages),
-      users: toJS(this.users)
+      users: this.users.map(item => item.toJS()),
     }
 
     window.localStorage.setItem(name, JSON.stringify(data))
@@ -79,9 +81,9 @@ class View {
   @action hydrate (name) {
     try {
       const viewStore = JSON.parse(window.localStorage.getItem(name))
-      this.checkedGames = viewStore.checkedGames || []
+      this.checkedGames = viewStore.checkedGames.map(item => Game.fromJS(this, item))
       this.languages = viewStore.languages || []
-      this.users = viewStore.users || []
+      this.users = viewStore.users.map(item => User.fromJS(this, item))
     } catch (e) {}
   }
 }
