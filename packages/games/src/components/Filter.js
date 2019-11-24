@@ -6,7 +6,7 @@ import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import AsyncSelect from 'react-select/async'
-import { StoreContext } from '../store/context'
+import { StoreContext } from '../stores/context'
 import { withStoreContext } from '../utils/hoc'
 
 @observer

@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { observer } from 'mobx-react'
 import Slider from 'react-slick'
-import { StoreContext } from '../store/context'
+import { StoreContext } from '../stores/context'
 import { withStoreContext } from '../utils/hoc'
 import Game from './Game'
 import Loader from './Loader'

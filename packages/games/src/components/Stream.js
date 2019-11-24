@@ -5,7 +5,7 @@ import langs from 'langs'
 import Badge from 'react-bootstrap/Badge'
 import Card from 'react-bootstrap/Card'
 import ProgressBar from 'react-bootstrap/ProgressBar'
-import { StoreContext } from '../store/context'
+import { StoreContext } from '../stores/context'
 import { withStoreContext } from '../utils/hoc'
 
 @observer

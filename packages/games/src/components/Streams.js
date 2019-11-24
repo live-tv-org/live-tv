@@ -5,7 +5,7 @@ import styled  from 'styled-components'
 import Button  from 'react-bootstrap/Button'
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import { StoreContext } from '../store/context'
+import { StoreContext } from '../stores/context'
 import { withStoreContext } from '../utils/hoc'
 import Stream from './Stream'
 

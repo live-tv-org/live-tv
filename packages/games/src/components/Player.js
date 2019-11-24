@@ -3,7 +3,7 @@ import { observer } from 'mobx-react'
 import Button from 'react-bootstrap/Button'
 import Modal from 'react-bootstrap/Modal'
 import { createGlobalStyle } from 'styled-components'
-import { StoreContext } from '../store/context'
+import { StoreContext } from '../stores/context'
 import { withStoreContext } from '../utils/hoc'
 
 const PLAYER_WIDTH = 620

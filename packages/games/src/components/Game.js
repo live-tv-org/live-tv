@@ -2,7 +2,7 @@ import React from 'react'
 import { action } from 'mobx'
 import { observer } from 'mobx-react'
 import Card from 'react-bootstrap/Card';
-import { StoreContext } from '../store/context'
+import { StoreContext } from '../stores/context'
 import { withStoreContext } from '../utils/hoc'
 
 @observer

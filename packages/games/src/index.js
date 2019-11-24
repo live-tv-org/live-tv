@@ -1,8 +1,8 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { configure } from 'mobx'
-import stores from './store'
-import { StoreContext } from './store/context'
+import stores from './stores'
+import { StoreContext } from './stores/context'
 import App from './App'
 
 console.info('GAMES bootstrap')
