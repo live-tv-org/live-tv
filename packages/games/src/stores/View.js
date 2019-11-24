@@ -19,6 +19,15 @@ class View {
     autorun(() => this.persist(name))
   }
 
+  @action changeGames = (games) => {
+    games = games || []
+    this.checkedGames = games.map(item => Game.fromJS(this, item))
+  }
+
+  @computed get checkedGamesToJS () {
+    return this.checkedGames.map(item => item.toJS())
+  }
+
   @action checkGame (game) {
     this.checkedGames.push(game)
   }
@@ -68,6 +77,24 @@ class View {
 
   fetchStreams = (...args) => this.streamsStore.fetch(this.filterParams, ...args)
 
+  @action changeUsers = (users) => {
+    users = users || []
+    this.users = users.map(item => User.fromJS(this, item))
+  }
+
+  @computed get usersToJS () {
+    return this.users.map(item => item.toJS())
+  }
+
+  @action changeLang = (lang) => {
+    lang = lang || []
+    this.languages = lang
+  }
+
+  @computed get langToJS () {
+    return toJS(this.languages)
+  }
+
   persist (name) {
     const data = {
       checkedGames: this.checkedGames.map(item => item.toJS()),
@@ -80,10 +107,10 @@ class View {
 
   @action hydrate (name) {
     try {
-      const viewStore = JSON.parse(window.localStorage.getItem(name))
-      this.checkedGames = viewStore.checkedGames.map(item => Game.fromJS(this, item))
-      this.languages = viewStore.languages || []
-      this.users = viewStore.users.map(item => User.fromJS(this, item))
+      const storage = JSON.parse(window.localStorage.getItem(name))
+      this.checkedGames = storage.checkedGames.map(item => Game.fromJS(this, item))
+      this.languages = storage.languages || []
+      this.users = storage.users.map(item => User.fromJS(this, item))
     } catch (e) {}
   }
 }

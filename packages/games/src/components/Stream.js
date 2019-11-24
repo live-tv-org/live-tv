@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { observer } from 'mobx-react'
 import styled  from 'styled-components'
-import langs from 'langs'
 import Badge from 'react-bootstrap/Badge'
 import Card from 'react-bootstrap/Card'
 import ProgressBar from 'react-bootstrap/ProgressBar'
@@ -13,11 +12,7 @@ class Stream extends Component {
   render () {
     console.info('render Stream')
 
-    const {
-      stream: { title, thumbnailUrlDim, viewerCount, userName, language, isPopular, maxViewerCount }
-    } = this.props
-
-    const lang = langs.where('1', language).local
+    const { title, thumbnailUrlDim, viewerCount, userName, lang, isPopular, maxViewerCount } = this.props.stream
 
     return (
       <Card onClick={this.onShow} as='li' style={{ cursor: 'pointer' }}>

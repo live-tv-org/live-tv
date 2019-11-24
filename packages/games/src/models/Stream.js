@@ -1,4 +1,5 @@
 import { computed } from 'mobx'
+import langs from 'langs'
 
 export default class Stream {
   constructor (store, { id, gameId, language, thumbnailUrl, title, userId, userName, viewerCount }) {
@@ -24,6 +25,10 @@ export default class Stream {
 
   @computed get maxViewerCount() {
     return this.store.maxViewer.viewerCount
+  }
+
+  @computed get lang() {
+    return langs.where('1', this.language).local
   }
 
   toJS() {

@@ -31,9 +31,9 @@ class Filter extends Component {
               isDisabled={pendingRequests}
               getOptionValue={({ id }) => id}
               getOptionLabel={({ name }) => name}
-              onChange={this.onChangeGame}
+              onChange={viewStore.changeGames}
               cacheOptions
-              value={toJS(viewStore.checkedGames)}
+              value={viewStore.checkedGamesToJS}
               defaultOptions={gamesStore.topGames}
               loadOptions={this.findGame}
             />
@@ -43,11 +43,11 @@ class Filter extends Component {
               isMulti
               placeholder='Select langs...'
               isDisabled={pendingRequests}
-              value={toJS(viewStore.languages)}
+              value={viewStore.langToJS}
               options={viewStore.languagesDict}
               getOptionValue={(item) => item[1]}
               getOptionLabel={({ local }) => local}
-              onChange={this.onChangeLang}
+              onChange={viewStore.changeLang}
             />
           </Col>
           <Col md='3'>
@@ -57,8 +57,8 @@ class Filter extends Component {
               isDisabled={pendingRequests}
               getOptionValue={({ id }) => id}
               getOptionLabel={({ displayName }) => displayName}
-              value={toJS(viewStore.users)}
-              onChange={this.onChangeUser}
+              value={viewStore.usersToJS}
+              onChange={viewStore.changeUsers}
               cacheOptions
               loadOptions={this.findUser}
             />
@@ -75,12 +75,6 @@ class Filter extends Component {
       </Form>
     )
   }
-
-  @action onChangeGame = selected => this.props.viewStore.checkedGames = selected || []
-
-  @action onChangeLang = selected => this.props.viewStore.languages = selected || []
-
-  @action onChangeUser = selected => this.props.viewStore.users = selected || []
 
   @action findGame = inputValue => new Promise(resolve => {
     this.props.gamesStore.fetch({ name: inputValue }).then(resolve)
