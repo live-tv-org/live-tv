@@ -52,8 +52,7 @@ class Player extends Component {
 
   togglePlayer = () => {
     const options = { width: PLAYER_WIDTH, height: PLAYER_WIDTH * RATIO, channel: this.props.viewStore.playStream };
-    const player = new window.Twitch.Player(this.playerCont.current, options);
-    player.setVolume(0.5);
+    new window.Twitch.Player(this.playerCont.current, options);
   }
 }
 
