@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import { action } from 'mobx'
 import { observer } from 'mobx-react'
 import styled  from 'styled-components'
 import Button  from 'react-bootstrap/Button'
