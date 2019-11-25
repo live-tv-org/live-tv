@@ -1,5 +1,3 @@
-import { computed } from 'mobx'
-
 export default class Game {
   constructor (store, { id, name, boxArtUrl }) {
     this.store = store
@@ -9,8 +7,8 @@ export default class Game {
     this.boxArtUrl = boxArtUrl
   }
 
-  @computed get boxArtUrlDim() {
-    return this.boxArtUrl.replace('{width}', 200).replace('{height}', 200)
+  getBoxArtUrl = (width = 200, height = 200) => {
+    return this.boxArtUrl.replace('{width}', width).replace('{height}', height)
   }
 
   toJS() {

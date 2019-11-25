@@ -7,16 +7,19 @@ import ProgressBar from 'react-bootstrap/ProgressBar'
 import { StoreContext } from '../stores/context'
 import { withStoreContext } from '../utils/hoc'
 
+const WIDTH = 210
+const HEIGHT = 125
+
 @observer
 class Stream extends Component {
   render () {
     console.info('render Stream')
 
-    const { title, thumbnailUrlDim, viewerCount, userName, lang, isPopular, maxViewerCount } = this.props.stream
+    const { title, getThumbnailUrl, viewerCount, userName, lang, isPopular, maxViewerCount } = this.props.stream
 
     return (
       <Card onClick={this.onShow} as='li' style={{ cursor: 'pointer' }}>
-        <Card.Img src={thumbnailUrlDim} alt={title} variant='top' />
+        <Preview src={getThumbnailUrl(WIDTH, HEIGHT)} alt={title} variant='top' />
         <Card.Body>
           <Card.Title style={{ whiteSpace: 'nowrap', textOverflow: 'ellipsis', overflow: 'hidden' }}>{title}</Card.Title>
           <Card.Subtitle className="mb-2 text-muted">{userName} <Badge variant='light'>{lang}</Badge></Card.Subtitle>
@@ -31,6 +34,11 @@ class Stream extends Component {
 
   onShow = () => this.props.viewStore.playStreamPlaying(this.props.stream)
 }
+
+const Preview = styled(Card.Img)`
+  width: ${WIDTH}px;
+  height: ${HEIGHT}px;
+`
 
 const Popularity = styled(ProgressBar)`
   height: 4px;

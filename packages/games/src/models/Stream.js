@@ -15,8 +15,8 @@ export default class Stream {
     this.viewerCount = viewerCount
   }
 
-  @computed get thumbnailUrlDim() {
-    return this.thumbnailUrl.replace('{width}', 210).replace('{height}', 125)
+  getThumbnailUrl = (width = 210, height = 125) => {
+    return this.thumbnailUrl.replace('{width}', width).replace('{height}', height)
   }
 
   @computed get isPopular() {
