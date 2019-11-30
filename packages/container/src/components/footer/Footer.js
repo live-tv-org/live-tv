@@ -4,9 +4,10 @@ import Container from 'react-bootstrap/Container';
 const Footer = () => (
   <footer className='text-muted'>
     <Container>
-      <p>
-        &copy; 2019 LiveTV
-      </p>
+      <ul className="list-inline">
+        <li className="list-inline-item">&copy; 2019 LiveTV</li>
+        <li className="list-inline-item"><a href="mailto:support@live-tv.org">contact us</a></li>
+      </ul>
     </Container>
   </footer>
 )
