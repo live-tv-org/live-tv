@@ -10,11 +10,12 @@ class View {
   @observable users = []
   @observable playStream = null
 
-  constructor (name, gamesStore, streamsStore, usersStore) {
+  constructor (gamesStore, streamsStore, usersStore) {
     this.gamesStore = gamesStore
     this.streamsStore = streamsStore
     this.usersStore = usersStore
 
+    const name = 'viewStore'
     this.hydrate(name)
     autorun(() => this.persist(name))
   }

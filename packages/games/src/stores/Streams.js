@@ -1,18 +1,17 @@
 import { flow, observable, computed } from 'mobx'
-import api from '../utils/api'
-import { urlParamsStringify } from '../utils'
 import Loader from './Loader'
 import Stream from '../models/Stream'
 
 class Streams {
   @observable streams = []
 
-  constructor () {
+  constructor (transportLayer) {
+    this.transportLayer = transportLayer
     this.loader = new Loader()
   }
 
   fetch = flow(function* (params, options = {}) {
-    const { loader } = this
+    const { loader, transportLayer } = this
 
     loader.create()
     try {
@@ -24,7 +23,7 @@ class Streams {
         params.after = this.streamsPagination.cursor
       }
 
-      let { data, pagination } = yield api.fetch(`https://api.twitch.tv/helix/streams?${urlParamsStringify(params)}`)
+      let { data, pagination } = yield transportLayer.all(params)
 
       data = data.map(item => Stream.fromJS(this, item))
 

@@ -2,11 +2,12 @@ import GamesStore from './Games'
 import StreamsStore from './Streams'
 import UsersStore from './Users'
 import ViewStore from './View'
+import api from '../api'
 
-const gamesStore = new GamesStore()
-const streamsStore = new StreamsStore()
-const usersStore = new UsersStore()
-const viewStore = new ViewStore('viewStore', gamesStore, streamsStore, usersStore)
+const gamesStore = new GamesStore(api.games)
+const streamsStore = new StreamsStore(api.streams)
+const usersStore = new UsersStore(api.users)
+const viewStore = new ViewStore(gamesStore, streamsStore, usersStore)
 
 const stores = {
   gamesStore,
