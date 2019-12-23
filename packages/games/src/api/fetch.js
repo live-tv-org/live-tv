@@ -16,12 +16,12 @@ const _fetch = (url, { data, headers, ...opt } = {}) => {
       // 'Authorization': `Bearer ${token}`
     },
   })
-      .then(resp => {
-        if (!resp.ok) {
-          throw new Error('Server an error')
-        }
-        return resp.json()
-      })
+    .then(resp => {
+      if (!resp.ok) {
+        throw new Error('Server an error')
+      }
+      return resp.json()
+    })
     .then(({ data, ...other }) => {
       if (Array.isArray(data)) {
         return { data: data.map(camelCaseObj), ...other }

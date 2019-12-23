@@ -1,11 +1,15 @@
 import { observable, computed, action, autorun, toJS } from 'mobx'
 import differenceBy from 'lodash/differenceBy'
+import intersectionBy from 'lodash/intersectionBy'
 import langs from 'langs'
 import Game from '../models/Game'
 import User from '../models/User'
 
+const MAX_TOP_GAMES = 3
+
 class View {
   @observable checkedGames = []
+  @observable myGames = []
   @observable languages = []
   @observable users = []
   @observable playStream = null
@@ -20,13 +24,22 @@ class View {
     autorun(() => this.persist(name))
   }
 
-  @action changeGames = (games) => {
+  @action changeGames = games => {
     games = games || []
     this.checkedGames = games.map(item => Game.fromJS(this, item))
+
+    const foundGames = intersectionBy(this.gamesStore.games, this.checkedGames, 'id')
+    const newCheckedGames = differenceBy(foundGames, this.myGames, 'id')
+    this.myGames.unshift(...newCheckedGames)
+    this.myGames.splice(MAX_TOP_GAMES, this.myGames.length - MAX_TOP_GAMES)
   }
 
   @computed get checkedGamesToJS () {
     return this.checkedGames.map(item => item.toJS())
+  }
+
+  @computed get myGamesToJS () {
+    return this.myGames.map(item => item.toJS())
   }
 
   @action checkGame (game) {
@@ -121,8 +134,9 @@ class View {
   persist (name) {
     const data = {
       checkedGames: this.checkedGames.map(item => item.toJS()),
-      languages: toJS(this.languages),
+      myGames: this.myGames.map(item => item.toJS()),
       users: this.users.map(item => item.toJS()),
+      languages: toJS(this.languages)
     }
 
     window.localStorage.setItem(name, JSON.stringify(data))
@@ -132,8 +146,9 @@ class View {
     try {
       const storage = JSON.parse(window.localStorage.getItem(name))
       this.checkedGames = storage.checkedGames.map(item => Game.fromJS(this, item))
-      this.languages = storage.languages || []
+      this.myGames = storage.myGames.map(item => Game.fromJS(this, item))
       this.users = storage.users.map(item => User.fromJS(this, item))
+      this.languages = storage.languages || []
     } catch (e) {}
   }
 }

@@ -17,7 +17,7 @@ class Filter extends Component {
   render () {
     console.info('render Filter')
 
-    const { gamesStore, streamsStore, viewStore } = this.props
+    const { streamsStore, viewStore } = this.props
     const { pendingRequests } = streamsStore.loader
 
     return (
@@ -31,9 +31,9 @@ class Filter extends Component {
               getOptionValue={({ id }) => id}
               getOptionLabel={({ name }) => name}
               onChange={viewStore.changeGames}
-              cacheOptions
               value={viewStore.checkedGamesToJS}
-              defaultOptions={gamesStore.topGames}
+              defaultOptions={viewStore.myGamesToJS}
+              cacheOptions
               loadOptions={this.findGame}
             />
           </Col>
@@ -75,7 +75,9 @@ class Filter extends Component {
     )
   }
 
-  findGame = inputValue => this.props.gamesStore.fetch({ name: inputValue })
+  findGame = inputValue => new Promise(res => {
+    this.props.gamesStore.fetch({ name: inputValue }).then(d => res(d))
+  })
 
   findUser = inputValue => this.props.usersStore.fetch({ login: inputValue })
 
