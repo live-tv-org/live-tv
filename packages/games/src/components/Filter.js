@@ -30,9 +30,9 @@ class Filter extends Component {
               isDisabled={pendingRequests}
               getOptionValue={({ id }) => id}
               getOptionLabel={({ name }) => name}
-              onChange={viewStore.changeGames}
               value={viewStore.checkedGamesToJS}
               defaultOptions={viewStore.myGamesToJS}
+              onChange={viewStore.changeGames}
               cacheOptions
               loadOptions={this.findGame}
             />
@@ -57,6 +57,7 @@ class Filter extends Component {
               getOptionValue={({ id }) => id}
               getOptionLabel={({ displayName }) => displayName}
               value={viewStore.usersToJS}
+              defaultOptions={viewStore.myUsersToJS}
               onChange={viewStore.changeUsers}
               cacheOptions
               loadOptions={this.findUser}
@@ -79,7 +80,9 @@ class Filter extends Component {
     this.props.gamesStore.fetch({ name: inputValue }).then(d => res(d))
   })
 
-  findUser = inputValue => this.props.usersStore.fetch({ login: inputValue })
+  findUser = inputValue => new Promise(res => {
+    this.props.usersStore.fetch({ login: inputValue }).then(d => res(d))
+  })
 
   onSubmit = e => {
     e.preventDefault()

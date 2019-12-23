@@ -5,13 +5,15 @@ import langs from 'langs'
 import Game from '../models/Game'
 import User from '../models/User'
 
-const MAX_TOP_GAMES = 3
+const MAX_TOP_GAMES = 10
+const MAX_TOP_USERS = 10
 
 class View {
   @observable checkedGames = []
   @observable myGames = []
   @observable languages = []
   @observable users = []
+  @observable myUsers = []
   @observable playStream = null
 
   constructor (gamesStore, streamsStore, usersStore) {
@@ -74,10 +76,18 @@ class View {
   @action changeUsers = (users) => {
     users = users || []
     this.users = users.map(item => User.fromJS(this, item))
+
+    const newCheckedUsers = differenceBy(this.users, this.myUsers, 'id')
+    this.myUsers.unshift(...newCheckedUsers)
+    this.myUsers.splice(MAX_TOP_USERS, this.myUsers.length - MAX_TOP_USERS)
   }
 
   @computed get usersToJS () {
     return this.users.map(item => item.toJS())
+  }
+
+  @computed get myUsersToJS () {
+    return this.myUsers.map(item => item.toJS())
   }
 
   @action changeLang = (lang) => {
@@ -136,6 +146,7 @@ class View {
       checkedGames: this.checkedGames.map(item => item.toJS()),
       myGames: this.myGames.map(item => item.toJS()),
       users: this.users.map(item => item.toJS()),
+      myUsers: this.myUsers.map(item => item.toJS()),
       languages: toJS(this.languages)
     }
 
@@ -148,6 +159,7 @@ class View {
       this.checkedGames = storage.checkedGames.map(item => Game.fromJS(this, item))
       this.myGames = storage.myGames.map(item => Game.fromJS(this, item))
       this.users = storage.users.map(item => User.fromJS(this, item))
+      this.myUsers = storage.myUsers.map(item => User.fromJS(this, item))
       this.languages = storage.languages || []
     } catch (e) {}
   }

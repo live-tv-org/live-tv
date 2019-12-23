@@ -18,11 +18,7 @@ class Games {
     loader.create()
     try {
       const { data } = yield transportLayer.all(params)
-      
-      if (!data.length) return loader.completed()
-      
-      const games = data.map(item => Game.fromJS(this, item))
-      this.games.unshift(...games)
+      this.games = data.map(item => Game.fromJS(this, item))
       loader.completed()
       return this.games
     } catch (e) {
