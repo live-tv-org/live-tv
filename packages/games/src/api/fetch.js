@@ -2,7 +2,7 @@ import camelCase from 'camelcase'
 
 const _fetch = (url, { data, headers, ...opt } = {}) => {
   const clientId = sessionStorage.getItem('TWITCH_CLIENT_ID')
-  // const token = sessionStorage.getItem('token')
+  const token = sessionStorage.getItem('token')
 
   if (data) {
     url = `${url}?${urlParamsStringify(data)}`
@@ -12,8 +12,8 @@ const _fetch = (url, { data, headers, ...opt } = {}) => {
     ...opt,
     headers: {
       ...headers,
-      'Client-ID': clientId
-      // 'Authorization': `Bearer ${token}`
+      'Client-ID': clientId,
+      'Authorization': `Bearer ${token}`
     },
   })
     .then(resp => {

@@ -2,12 +2,24 @@ import { observable, flow } from 'mobx'
 import Loader from './Loader'
 import Game from '../models/Game'
 
-class Games {
+interface GamesInterface {
+  games: Game[],
+  readonly loader: Loader,
+  fetch(params?: object): void,
+
+  topGames: Game[],
+  readonly loaderTop: Loader,
+  fetchTop(): void
+}
+
+class Games implements GamesInterface {
   @observable games = []
   @observable topGames = []
 
-  constructor (transportLayer) {
-    this.transportLayer = transportLayer
+  loader
+  loaderTop
+
+  constructor (private transportLayer) {
     this.loader = new Loader()
     this.loaderTop = new Loader()
   }
@@ -17,6 +29,7 @@ class Games {
 
     loader.create()
     try {
+      // @ts-ignore
       const { data } = yield transportLayer.all(params)
       this.games = data.map(item => Game.fromJS(this, item))
       loader.completed()
@@ -31,6 +44,7 @@ class Games {
 
     loaderTop.create()
     try {
+      // @ts-ignore
       const { data } = yield transportLayer.top()
       this.topGames = data.map(item => Game.fromJS(this, item))
       loaderTop.completed()

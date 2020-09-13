@@ -9,7 +9,7 @@ console.info('GAMES bootstrap')
 
 configure({ enforceActions: 'always' })
 
-window.gamesRender = (container) => {
+window["gamesRender"] = (container) => {
   console.info('gamesRender', container)
   ReactDOM.render((
     <StoreContext.Provider value={stores}>
@@ -18,7 +18,7 @@ window.gamesRender = (container) => {
   ), container)
 }
 
-window.gamesUnmount = () => {
+window["gamesUnmount"] = () => {
   console.info('gamesUnmount')
 }
 

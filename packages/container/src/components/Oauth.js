@@ -21,11 +21,11 @@ const Oauth = ({ children, doc, clientId, url, redirectURI, scope, responseType 
     if (sessionStorage.getItem('token')) {
       return setIsLogged(true)
     }
-  })
+  }, [ doc ])
 
   const tokenUrl = `${url}?client_id=${clientId}&redirect_uri=${redirectURI}&response_type=${responseType}&scope=${scope}`
 
-  return isLogged ? children : <a href={tokenUrl}>Авторизуйтесь</a>
+  return isLogged ? children : <a href={tokenUrl}>Log in</a>
 }
 
 Oauth.propTypes = {
@@ -38,7 +38,7 @@ Oauth.propTypes = {
 
 Oauth.defaultProps = {
   url: 'https://id.twitch.tv/oauth2/authorize',
-  redirectURI: 'http://localhost:3000/',
+  redirectURI: `${window.location.origin}/`,
   scope: '',
   responseType: 'token',
   doc: window.document

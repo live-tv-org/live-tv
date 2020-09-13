@@ -1,5 +1,5 @@
-import React from 'react';
-import Jumbotron from 'react-bootstrap/Jumbotron';
+import React from 'react'
+import Jumbotron from 'react-bootstrap/Jumbotron'
 import Games from './components/Games'
 import Filter from './components/Filter'
 import Streams from './components/Streams'
@@ -18,4 +18,4 @@ function App() {
   );
 }
 
-export default App;
+export default App

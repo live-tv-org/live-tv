@@ -1,0 +1,9 @@
+{
+  "include": [ "./src/" ],
+  "compilerOptions": {
+    "jsx": "react",
+    "allowSyntheticDefaultImports": true,
+    "experimentalDecorators": true,
+    "sourceMap": true
+  }
+}

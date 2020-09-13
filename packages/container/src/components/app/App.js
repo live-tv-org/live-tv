@@ -3,6 +3,7 @@ import Container from 'react-bootstrap/Container';
 import Header from '../header'
 import Footer from '../footer'
 import MicroFrontend from '../MicroFrontend'
+import Oauth from '../Oauth'
 
 const {
   REACT_APP_GAMES_HOST,
@@ -20,7 +21,9 @@ const App = () => {
 
       <main className='mt-4 mb-4'>
         <Container>
-          <MicroFrontend name='games' host={REACT_APP_GAMES_HOST} />
+          <Oauth clientId={REACT_APP_TWITCH_CLIENT_ID}>
+            <MicroFrontend name='games' host={REACT_APP_GAMES_HOST} />
+          </Oauth>
         </Container>
       </main>
 
